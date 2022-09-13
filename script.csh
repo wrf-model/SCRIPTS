@@ -22,7 +22,7 @@ if      ( $WHICH_FUNCTION == BUILD ) then
 
 	#	There are at least four args that are required for a BUILD step.
 	#	1. Clean? If yes then the value is CLEAN, if no then any other string.
-	#	2. The configuration number. For example, Linux GNU MPI = 34.
+	#	2. The configuration number. For example, Linux GNU MPI = 3.
 	#	3. The nest option for the configuration. Always 1, unless a moving domain.
 	#	4. The build target for compile, for example, "em_real".
 
@@ -105,7 +105,7 @@ if      ( $WHICH_FUNCTION == BUILD ) then
 	
 	#	The configure step has three pieces of input information. 
 	#	1. There are the associated option flags, for example "-d".
-	#	2. There is the numerical selection, for example Linux GNU MPI = 34.
+	#	2. There is the numerical selection, for example Linux GNU MPI = 3.
 	#	3. There is the nesting, typically = 1.
 
 	./configure ${CONF_OPT} << EOF >& configure.output
@@ -181,7 +181,7 @@ else if ( $WHICH_FUNCTION == RUN   ) then
 
 	#	We need four input values for the RUN phase of the script.
 	#	1. The build target, for example "em_real".
-	#	2. The build number from the configuration, such as 34 for MPI.
+	#	2. The build number from the configuration, such as 3 for MPI.
 	#	   Honestly, this should be cleaned up by getting the info
 	#	   from within files in the container.
 	#	3. The directory structure where the namelist and data are located
@@ -316,11 +316,11 @@ else if ( $WHICH_FUNCTION == RUN   ) then
 	          ( ( ${COMP_BUILD_TARGET} == em_real       ) && ( $COMP_RUN_DIR == em_realJ       ) ) || \
 	          ( ( ${COMP_BUILD_TARGET} == em_real       ) && ( $COMP_RUN_DIR == em_realK       ) ) || \
 	          ( ( ${COMP_BUILD_TARGET} == em_real       ) && ( $COMP_RUN_DIR == em_realL       ) ) ) then
-		if      ( $CONF_BUILD_NUM == 32 ) then
+		if      ( $CONF_BUILD_NUM == 1 ) then
 			cp /wrf/Namelists/weekly/$COMP_RUN_DIR/SERIAL/namelist.input.${COMP_RUN_TEST} namelist.input
-		else if ( $CONF_BUILD_NUM == 33 ) then
+		else if ( $CONF_BUILD_NUM == 2 ) then
 			cp /wrf/Namelists/weekly/$COMP_RUN_DIR/OPENMP/namelist.input.${COMP_RUN_TEST} namelist.input
-		else if ( $CONF_BUILD_NUM == 34 ) then
+		else if ( $CONF_BUILD_NUM == 3 ) then
 			cp /wrf/Namelists/weekly/$COMP_RUN_DIR/MPI/namelist.input.${COMP_RUN_TEST} namelist.input
 		endif
 	else if ( ( ${COMP_BUILD_TARGET} == em_real ) && ( $COMP_RUN_DIR == em_move ) ) then
@@ -357,16 +357,16 @@ else if ( $WHICH_FUNCTION == RUN   ) then
 
 	#	Run the front-end program to WRF, which is real.exe, real_nmm.exe, or ideal.exe.
 
-	if      ( $CONF_BUILD_NUM == 32 ) then
+	if      ( $CONF_BUILD_NUM == 1 ) then
 		${exec} >& real.print.out
 		grep -q SUCCESS real.print.out
 		set OK_FOUND_SUCCESS = $status
-	else if ( $CONF_BUILD_NUM == 33 ) then
+	else if ( $CONF_BUILD_NUM == 2 ) then
 		setenv OMP_NUM_THREADS 1
 		${exec} >& real.print.out
 		grep -q SUCCESS real.print.out
 		set OK_FOUND_SUCCESS = $status
-	else if ( $CONF_BUILD_NUM == 34 ) then
+	else if ( $CONF_BUILD_NUM == 3 ) then
 		mpirun -np $NP --oversubscribe ${exec} >& real.print.out
 		cat rsl.out.0000 >> real.print.out
 		grep -q SUCCESS rsl.out.0000
@@ -423,18 +423,18 @@ else if ( $WHICH_FUNCTION == RUN   ) then
 
 #DAVE
 #	if ( -e /wrf/wrfoutput/SUCCESS_RUN_REAL_${COMP_BUILD_TARGET}_${CONF_BUILD_NUM}_${COMP_RUN_DIR}_${COMP_RUN_TEST} ) then
-		if      ( $CONF_BUILD_NUM == 32 ) then
+		if      ( $CONF_BUILD_NUM == 1 ) then
 			wrf.exe >& wrf.print.out
 			grep -q SUCCESS wrf.print.out
 			set OK_FOUND_SUCCESS = $status
-		else if ( $CONF_BUILD_NUM == 33 ) then
+		else if ( $CONF_BUILD_NUM == 2 ) then
 			if ( $HAVE_THREADS == TRUE ) then
 				setenv OMP_NUM_THREADS $WANT_THREADS
 			endif
 			wrf.exe >& wrf.print.out
 			grep -q SUCCESS wrf.print.out
 			set OK_FOUND_SUCCESS = $status
-		else if ( $CONF_BUILD_NUM == 34 ) then
+		else if ( $CONF_BUILD_NUM == 3 ) then
 			mpirun -np 3 --oversubscribe wrf.exe >& wrf.print.out
 			cat rsl.out.0000 >> wrf.print.out
 			grep -q SUCCESS rsl.out.0000
@@ -480,7 +480,7 @@ else if ( $WHICH_FUNCTION == RUN   ) then
 				if ( ( $OK_nan == 1 ) && ( $OK_time_levels == 0 ) ) then
 					set FILE = /wrf/wrfoutput/SUCCESS_RUN_WRF_d0${d}_${COMP_BUILD_TARGET}_${CONF_BUILD_NUM}_${COMP_RUN_DIR}_${COMP_RUN_TEST}
 					touch $FILE
-					python3 ~/rd_l2_norm.py wrfout_d0${d}_* >> $FILE
+					python3.8 ~/rd_l2_norm.py wrfout_d0${d}_* >> $FILE
 					exit ( 0 )
 				else 
 					touch /wrf/wrfoutput/FAIL_RUN_WRF_d0${d}_${COMP_BUILD_TARGET}_${CONF_BUILD_NUM}_${COMP_RUN_DIR}_${COMP_RUN_TEST}
