@@ -79,6 +79,7 @@
  num_soil_layers                     = 2,
  num_land_cat                        = 28,
  mp_zero_out                         = 0,
+ ghg_input                           = 0
  /
 
  &fdda

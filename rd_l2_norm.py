@@ -2,6 +2,10 @@ from netCDF4 import Dataset
 import numpy as np
 import sys
 
+# override boolean warning
+from warnings import filterwarnings
+filterwarnings(action='ignore', category=DeprecationWarning, message='`np.bool` is a deprecated alias')
+
 o = Dataset(str(sys.argv[1]))
 
 list_of_vars = o.variables.keys()
