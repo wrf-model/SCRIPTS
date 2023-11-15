@@ -81,7 +81,6 @@
  icloud                              = 3,
  num_land_cat                        = 28
  swint_opt                           = 2,
- ghg_input                           = 0
  /
 
  &fdda

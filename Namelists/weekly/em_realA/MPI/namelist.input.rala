@@ -80,7 +80,6 @@
  ensdim                              = 144,
  icloud                              = 3,
  num_land_cat                        = 28
- ghg_input                           = 0
  /
 
  &fdda

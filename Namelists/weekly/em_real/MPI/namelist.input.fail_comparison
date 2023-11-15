@@ -76,7 +76,6 @@
  mp_zero_out                         = 0,
  sf_urban_physics                    = 2,     2,     2,
  icloud                              = 3,
- ghg_input                           = 0
  /
 
  &fdda
