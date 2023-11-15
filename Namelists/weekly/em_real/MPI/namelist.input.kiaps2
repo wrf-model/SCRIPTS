@@ -94,7 +94,6 @@
  aer_ssa_val                         = 0.85
  aer_asy_opt                         = 1,
  aer_asy_val                         = 0.90
- ghg_input                           = 0
  /
 
  &fdda

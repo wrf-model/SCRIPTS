@@ -80,7 +80,6 @@
  tot_backscat_t                      = 1.0E-6, 1.0E-6, 1.0E-6
  tot_backscat_psi                    = 1.0E-5, 1.0E-5, 1.0E-5
  nens                                = 1,
- ghg_input			     = 0
  /
 
  &fdda

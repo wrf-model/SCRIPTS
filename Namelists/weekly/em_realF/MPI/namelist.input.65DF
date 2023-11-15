@@ -81,7 +81,6 @@
  mp_zero_out                         = 0,
  aer_opt                             = 3,
  use_aero_icbc                       = .FALSE.
- ghg_input			     = 0
  /
 
  &fdda

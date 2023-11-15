@@ -82,7 +82,6 @@
  maxens2                             = 3,
  maxens3                             = 16,
  ensdim                              = 144,
- ghg_input                           = 0
  /
 
 

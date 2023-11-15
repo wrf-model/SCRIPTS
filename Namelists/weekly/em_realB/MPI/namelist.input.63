@@ -90,7 +90,6 @@
  maxens3                             = 16,
  ensdim                              = 144,
  fractional_seaice                   = 1, 
- ghg_input                           = 0
  /
 
 &fdda

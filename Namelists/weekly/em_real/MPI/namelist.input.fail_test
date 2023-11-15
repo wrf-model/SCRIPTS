@@ -85,7 +85,6 @@
  num_land_cat                        = 24,
  mp_zero_out                         = 0,
  sf_urban_physics                    = 2,     2,     2,
- ghg_input                           = 0
  /
 
  &fdda
