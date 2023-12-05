@@ -316,11 +316,11 @@ else if ( $WHICH_FUNCTION == RUN   ) then
 	          ( ( ${COMP_BUILD_TARGET} == em_real       ) && ( $COMP_RUN_DIR == em_realJ       ) ) || \
 	          ( ( ${COMP_BUILD_TARGET} == em_real       ) && ( $COMP_RUN_DIR == em_realK       ) ) || \
 	          ( ( ${COMP_BUILD_TARGET} == em_real       ) && ( $COMP_RUN_DIR == em_realL       ) ) ) then
-		if      ( $CONF_BUILD_NUM == 1 ) then
+		if      ( $CONF_BUILD_NUM == 32 ) then
 			cp /wrf/Namelists/weekly/$COMP_RUN_DIR/SERIAL/namelist.input.${COMP_RUN_TEST} namelist.input
-		else if ( $CONF_BUILD_NUM == 2 ) then
+		else if ( $CONF_BUILD_NUM == 33 ) then
 			cp /wrf/Namelists/weekly/$COMP_RUN_DIR/OPENMP/namelist.input.${COMP_RUN_TEST} namelist.input
-		else if ( $CONF_BUILD_NUM == 3 ) then
+		else if ( $CONF_BUILD_NUM == 34 ) then
 			cp /wrf/Namelists/weekly/$COMP_RUN_DIR/MPI/namelist.input.${COMP_RUN_TEST} namelist.input
 		endif
 	else if ( ( ${COMP_BUILD_TARGET} == em_real ) && ( $COMP_RUN_DIR == em_move ) ) then
@@ -357,16 +357,16 @@ else if ( $WHICH_FUNCTION == RUN   ) then
 
 	#	Run the front-end program to WRF, which is real.exe, real_nmm.exe, or ideal.exe.
 
-	if      ( $CONF_BUILD_NUM == 1 ) then
+	if      ( $CONF_BUILD_NUM == 32 ) then
 		${exec} >& real.print.out
 		grep -q SUCCESS real.print.out
 		set OK_FOUND_SUCCESS = $status
-	else if ( $CONF_BUILD_NUM == 2 ) then
+	else if ( $CONF_BUILD_NUM == 33 ) then
 		setenv OMP_NUM_THREADS 1
 		${exec} >& real.print.out
 		grep -q SUCCESS real.print.out
 		set OK_FOUND_SUCCESS = $status
-	else if ( $CONF_BUILD_NUM == 3 ) then
+	else if ( $CONF_BUILD_NUM == 34 ) then
 		mpirun -np $NP --oversubscribe ${exec} >& real.print.out
 		cat rsl.out.0000 >> real.print.out
 		grep -q SUCCESS rsl.out.0000
@@ -423,18 +423,18 @@ else if ( $WHICH_FUNCTION == RUN   ) then
 
 #DAVE
 #	if ( -e /wrf/wrfoutput/SUCCESS_RUN_REAL_${COMP_BUILD_TARGET}_${CONF_BUILD_NUM}_${COMP_RUN_DIR}_${COMP_RUN_TEST} ) then
-		if      ( $CONF_BUILD_NUM == 1 ) then
+		if      ( $CONF_BUILD_NUM == 32 ) then
 			wrf.exe >& wrf.print.out
 			grep -q SUCCESS wrf.print.out
 			set OK_FOUND_SUCCESS = $status
-		else if ( $CONF_BUILD_NUM == 2 ) then
+		else if ( $CONF_BUILD_NUM == 33 ) then
 			if ( $HAVE_THREADS == TRUE ) then
 				setenv OMP_NUM_THREADS $WANT_THREADS
 			endif
 			wrf.exe >& wrf.print.out
 			grep -q SUCCESS wrf.print.out
 			set OK_FOUND_SUCCESS = $status
-		else if ( $CONF_BUILD_NUM == 3 ) then
+		else if ( $CONF_BUILD_NUM == 34 ) then
 			mpirun -np 3 --oversubscribe wrf.exe >& wrf.print.out
 			cat rsl.out.0000 >> wrf.print.out
 			grep -q SUCCESS rsl.out.0000
