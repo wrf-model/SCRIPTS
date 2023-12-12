@@ -79,6 +79,7 @@
  num_land_cat                        = 28,
  mp_zero_out                         = 0,
  use_aero_icbc                       = .TRUE.
+ ghg_input			     = 0
  /
 
  &fdda
