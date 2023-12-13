@@ -82,6 +82,7 @@
  oml_hml0                            = -50,
  oml_gamma                           = 0.20,
  isftcflx                            = 1,
+ ghg_input                           = 0
  /
 
  &fdda
