@@ -54,6 +54,7 @@
  cu_physics                          = 0,
  cudt                                = 0,
  num_soil_layers                     = 5,
+ ghg_input                           = 0
  /
 
  &fdda
